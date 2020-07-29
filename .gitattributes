@@ -1,0 +1,2 @@
+docs/Makefile linguist-documentation=false
+docs/conf.py linguist-documentation=false
