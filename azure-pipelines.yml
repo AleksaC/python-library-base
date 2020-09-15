@@ -1,0 +1,31 @@
+trigger:
+  - master
+
+pool:
+  vmImage: "ubuntu-latest"
+strategy:
+  matrix:
+    Python36:
+      python.version: "3.6"
+    Python37:
+      python.version: "3.7"
+    Python38:
+      python.version: "3.8"
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: "$(python.version)"
+    displayName: "Use Python $(python.version)"
+
+  - script: python -m pip install --upgrade pip tox
+    displayName: "Install tox"
+
+  - script: tox -e py
+    displayName: "Run tests"
+
+  - script: tox -e pre-commit
+    displayName: "Run pre-commit"
+
+  - script: tox -e mypy
+    displayName: "Run mypy"
