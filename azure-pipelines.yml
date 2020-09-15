@@ -1,5 +1,5 @@
 jobs:
-  - job: Run tests
+  - job: tests
     pool:
       vmImage: "ubuntu-latest"
     strategy:
@@ -20,7 +20,7 @@ jobs:
       - script: tox -e py
         displayName: "Run tests"
 
-  - job: Run pre-commit and mypy
+  - job: pre_commit
     pool:
       vmImage: "ubuntu-latest"
     steps:
@@ -31,5 +31,3 @@ jobs:
         displayName: "Install tox"
       - script: tox -e pre-commit
         displayName: "Run pre-commit"
-      - script: tox -e mypy
-        displayName: "Run mypy"
