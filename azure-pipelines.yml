@@ -1,25 +1,27 @@
 jobs:
   - job: tests
     pool:
-      vmImage: "ubuntu-latest"
+      vmImage: ubuntu-latest
     strategy:
       matrix:
         Python36:
-          python.version: "3.6"
+          python.version: 3.6
         Python37:
-          python.version: "3.7"
+          python.version: 3.7
         Python38:
-          python.version: "3.8"
+          python.version: 3.8
+        PyPy3:
+          python.version: pypy3
     steps:
       - task: UsePythonVersion@0
         inputs:
-          versionSpec: "$(python.version)"
-        displayName: "Use Python $(python.version)"
+          versionSpec: $(python.version)
+        displayName: Use Python $(python.version)
       - script: python -m pip install --upgrade pip tox
-        displayName: "Install tox"
+        displayName: Install tox
       - script: tox -e py
-        displayName: "Run tests"
-      - bash: .tox/py/bin/coverage xml -o coverage.xml
+        displayName: Run tests
+      - script: .tox/py/bin/coverage xml
         displayName: generate coverage xml
       - task: PublishCodeCoverageResults@1
         inputs:
@@ -29,12 +31,12 @@ jobs:
 
   - job: pre_commit
     pool:
-      vmImage: "ubuntu-latest"
+      vmImage: ubuntu-latest
     steps:
       - task: UsePythonVersion@0
         inputs:
-          versionSpec: "3.8"
+          versionSpec: 3.8
       - script: python -m pip install --upgrade pip tox
-        displayName: "Install tox"
+        displayName: Install tox
       - script: tox -e pre-commit
-        displayName: "Run pre-commit"
+        displayName: Run pre-commit
