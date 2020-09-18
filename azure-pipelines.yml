@@ -19,6 +19,13 @@ jobs:
         displayName: "Install tox"
       - script: tox -e py
         displayName: "Run tests"
+      - bash: .tox/py/bin/coverage xml -o coverage.xml
+        displayName: generate coverage xml
+      - task: PublishCodeCoverageResults@1
+        inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: coverage.xml
+        displayName: Publish coverage artifact
 
   - job: pre_commit
     pool:
