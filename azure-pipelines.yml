@@ -1,7 +1,7 @@
 jobs:
   - job: tests
     pool:
-      vmImage: ubuntu-latest
+      vmImage: ubuntu-18.04
     strategy:
       matrix:
         Python36:
@@ -17,7 +17,7 @@ jobs:
         inputs:
           versionSpec: $(python.version)
         displayName: Use Python $(python.version)
-      - script: python -m pip install --upgrade pip tox
+      - script: python -m pip install --upgrade pip setuptools tox virtualenv
         displayName: Install tox
       - script: tox -e py
         displayName: Run tests
@@ -29,14 +29,31 @@ jobs:
           summaryFileLocation: coverage.xml
         displayName: Publish coverage artifact
 
-  - job: pre_commit
+  - job: precommit
     pool:
-      vmImage: ubuntu-latest
+      vmImage: ubuntu-18.04
+    variables:
+      PRE_COMMIT_HOME: $(Pipeline.Workspace)/pre-commit-cache
     steps:
       - task: UsePythonVersion@0
         inputs:
           versionSpec: 3.8
-      - script: python -m pip install --upgrade pip tox
-        displayName: Install tox
-      - script: tox -e pre-commit
-        displayName: Run pre-commit
+      - script: |
+          echo "##vso[task.setvariable variable=PY]$(python -VV)"
+        displayName: set version variables
+      - task: Cache@2
+        inputs:
+          key: pre-commit | .pre-commit-config.yaml | "$(PY)"
+          path: $(PRE_COMMIT_HOME)
+
+  - job: docs
+    pool:
+      vmImage: ubuntu-18.04
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: 3.8
+      - script: python -m pip install --upgrade pip tox virtualenv
+        displayName: Install dependencies
+      - script: tox -e docs
+        displayName: Build documentation
