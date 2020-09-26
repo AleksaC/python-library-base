@@ -41,10 +41,14 @@ jobs:
       - script: |
           echo "##vso[task.setvariable variable=PY]$(python -VV)"
         displayName: set version variables
+      - script: pip install --upgrade pre-commit
+        displayName: Install pre-commit
       - task: Cache@2
         inputs:
           key: pre-commit | .pre-commit-config.yaml | "$(PY)"
           path: $(PRE_COMMIT_HOME)
+      - script: pre-commit run --all-files
+        displayName: Run pre-commit
 
   - job: docs
     pool:
