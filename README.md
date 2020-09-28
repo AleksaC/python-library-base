@@ -6,6 +6,31 @@
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/AleksaC/python-library-base/blob/master/.pre-commit-config.yaml)
 
+Starting point for developing python libraries.
+
+## About 📖
+This repository includes:
+ - basic structure of a python library with a console entrypoint
+ - basic tests structure and coverage configuration
+ - configuration for `black`, `isort` and `flake8` which are responsible for code
+    formatting and linting
+ - `pre-commit` config for running various linters and formatters
+ - `tox` configuration for:
+    - running tests with coverage for multiple versions of python interpreter
+    - running `pre-commit`
+    - using `mypy` for type checking
+    - generating docs using `sphinx-apidoc`
+ - azure pipelines configuration for running all the previous stuff in CI along
+    with automated publishing of packages to PyPi (or some other package repository)
+
+## Getting started ⚙️
+To use this repo as a base for your next python library either click the
+*Use this template* button on the GitHub page of the repo or simply clone it and
+reinitialize it as a new repository (`rm -rf .git && git init`). To quickly set
+up development environment run `source init.sh`. After that you can install
+`requirements-dev.txt` for running and testing the library or use `tox` to do
+that in a separate environment.
+
 ## Contact 🙋‍♂️
 - [Personal website](https://aleksac.me)
 - <a target="_blank" href="http://twitter.com/aleksa_c_"><img alt='Twitter followers' src="https://img.shields.io/twitter/follow/aleksa_c_.svg?style=social"></a>
