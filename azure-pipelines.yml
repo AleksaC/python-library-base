@@ -13,35 +13,14 @@ resources:
       ref: refs/heads/master
 
 jobs:
-  - job: tests
-    pool:
-      vmImage: ubuntu-18.04
-    strategy:
-      matrix:
-        Python36:
-          python.version: 3.6
-        Python37:
-          python.version: 3.7
-        Python38:
-          python.version: 3.8
-        PyPy3:
-          python.version: pypy3
-    steps:
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: $(python.version)
-        displayName: Use Python $(python.version)
-      - script: python -m pip install --upgrade pip setuptools tox virtualenv
-        displayName: Install tox
-      - script: tox -e py
-        displayName: Run tests
-      - script: .tox/py/bin/coverage xml
-        displayName: generate coverage xml
-      - task: PublishCodeCoverageResults@1
-        inputs:
-          codeCoverageTool: Cobertura
-          summaryFileLocation: coverage.xml
-        displayName: Publish coverage artifact
+  - template: jobs/python-tests.yml@aleksac
+    parameters:
+      toxenvs: [ py36, py37, py38, py39, pypy3 ]
+
+  - template: jobs/python-tests.yml@aleksac
+    parameters:
+      os: windows
+      toxenvs: [ py38 ]
 
   - template: jobs/pre-commit.yml@aleksac
 
