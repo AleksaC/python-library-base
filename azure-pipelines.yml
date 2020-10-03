@@ -1,3 +1,17 @@
+trigger:
+  branches:
+    include: [master, test-*]
+  tags:
+    include: ['*']
+
+resources:
+  repositories:
+    - repository: aleksac
+      type: github
+      endpoint: AleksaC
+      name: AleksaC/azure-pipelines-templates
+      ref: refs/heads/master
+
 jobs:
   - job: tests
     pool:
@@ -29,35 +43,6 @@ jobs:
           summaryFileLocation: coverage.xml
         displayName: Publish coverage artifact
 
-  - job: precommit
-    pool:
-      vmImage: ubuntu-18.04
-    variables:
-      PRE_COMMIT_HOME: $(Pipeline.Workspace)/pre-commit-cache
-    steps:
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: 3.8
-      - script: |
-          echo "##vso[task.setvariable variable=PY]$(python -VV)"
-        displayName: set version variables
-      - script: pip install --upgrade pre-commit
-        displayName: Install pre-commit
-      - task: Cache@2
-        inputs:
-          key: pre-commit | .pre-commit-config.yaml | "$(PY)"
-          path: $(PRE_COMMIT_HOME)
-      - script: pre-commit run --all-files
-        displayName: Run pre-commit
+  - template: jobs/pre-commit.yml@aleksac
 
-  - job: docs
-    pool:
-      vmImage: ubuntu-18.04
-    steps:
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: 3.8
-      - script: python -m pip install --upgrade pip tox virtualenv
-        displayName: Install dependencies
-      - script: tox -e docs
-        displayName: Build documentation
+  - template: jobs/sphinx-docs.yml@aleksac
