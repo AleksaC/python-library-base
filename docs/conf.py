@@ -13,6 +13,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath(".."))
 
+from library import __version__  # noqa: E402
 
 # -- Project information -----------------------------------------------------
 
@@ -21,7 +22,7 @@ copyright = "2020, Aleksa Cukovic"
 author = "Aleksa Cukovic"
 
 # The full version, including alpha/beta/rc tags
-release = "0.1.0"
+release = __version__
 
 
 # -- General configuration ---------------------------------------------------
