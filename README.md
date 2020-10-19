@@ -31,6 +31,12 @@ up development environment run `source init.sh`. After that you can install
 `requirements-dev.txt` for running and testing the library or use `tox` to do
 that in a separate environment.
 
+You can use [`bootstrap.py`](https://github.com/AleksaC/bootstrapy) to create
+your library using the following command:
+```shell script
+wget -O - https://raw.githubusercontent.com/AleksaC/python-library-base/master/bootstrap.py | python
+```
+
 ## Contact 🙋‍♂️
 - [Personal website](https://aleksac.me)
 - <a target="_blank" href="http://twitter.com/aleksa_c_"><img alt='Twitter followers' src="https://img.shields.io/twitter/follow/aleksa_c_.svg?style=social"></a>

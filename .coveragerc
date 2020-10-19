@@ -1,6 +1,6 @@
 [run]
 branch = true
-source = library
+source = ___library_name___
 
 omit =
     setup.py

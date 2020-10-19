@@ -10,7 +10,7 @@ Welcome to library's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   library/modules.rst
+   ___library_name___/modules.rst
 
 
 Indices and tables

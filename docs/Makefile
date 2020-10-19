@@ -16,7 +16,7 @@ help:
 
 .PHONY: generate
 generate:
-	@sphinx-apidoc -f -o ./library ../library -M
+	@sphinx-apidoc -f -o ./___library_name___ ../___library_name___ -M
 
 .PHONY: open
 open:

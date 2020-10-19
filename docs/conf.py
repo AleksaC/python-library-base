@@ -13,13 +13,13 @@ import sys
 
 sys.path.insert(0, os.path.abspath(".."))
 
-from library import __version__  # noqa: E402
+from ___library_name___ import __version__  # noqa: E402
 
 # -- Project information -----------------------------------------------------
 
-project = "library"
-copyright = "2020, Aleksa Cukovic"
-author = "Aleksa Cukovic"
+project = "___library_name___"
+copyright = "2020, ___author_name___"
+author = "___author_name___"
 
 # The full version, including alpha/beta/rc tags
 release = __version__
